@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class HackerrankApplication {
+public class GenerateExcelApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(HackerrankApplication.class, args);
+		SpringApplication.run(GenerateExcelApplication.class, args);
 	}
 
 }
