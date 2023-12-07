@@ -51,4 +51,28 @@ public class File(){
             return "Unable to upload. File is empty.";
         }
     }
+
+
+    @PostMapping("/post-template-goal")
+    public ResponseEntity<?> downloadTemplate(@RequestBody Map<String,Object> input) throws Exception {
+    log.create(input);
+    byte[] fileData = egs.downloadTemplateByFilter(input);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        headers.setContentDispositionFormData("attachment", input.get("jobPosition").toString()+"_"+input.get("year").toString()+".xlsx"); // Set the desired filename
+
+         String desc = map.get("description").toString();
+        String year = map.get("year").toString();
+        String job = map.get("jobPosition").toString();
+        byte[] file = null;
+
+        desc = "%"+desc.replace(",", "%")+"%";
+
+        List<Object[]> obj = ulr.getScaleComponentByFilter(desc, year, job);
+        Object[] o = obj.get(0);
+        file = (byte[])o[2];
+        return file;
+        return new ResponseEntity<>(fileData, headers, org.springframework.http.HttpStatus.OK);
+    }
 }
